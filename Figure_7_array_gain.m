@@ -28,7 +28,7 @@ plot(para.fm_all/1e9, 10*log10(P_conv_MCM/para.N), '--', 'LineWidth', 1.5);
 plot(para.fm_all/1e9, 10*log10(P_conv_CF/para.N), ':', 'LineWidth', 1.5);
 set(groot,'defaultAxesTickLabelInterpreter','latex');
 legend("TTD-BF, Proposed method","TTD-BF, Proposed robust method",...
-    "Conventional BF, MCCM", "Conventional BF, MCM", "Conventional BF, CF");
+    "Conventional BF, MCCM", "Conventional BF, MCM", "Conventional BF, CF", 'Interpreter', 'Latex');
 xlabel('Frequency (GHz)', 'Interpreter', 'Latex');
 title('$B = 10$ GHz', 'Interpreter', 'Latex');
 
