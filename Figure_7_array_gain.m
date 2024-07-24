@@ -63,4 +63,5 @@ plot(para.fm_all/1e9, 10*log10(P_conv_MCM/para.N), '--', 'LineWidth', 1.5);
 plot(para.fm_all/1e9, 10*log10(P_conv_CF/para.N), ':', 'LineWidth', 1.5);
 xlabel('Frequency (GHz)', 'Interpreter', 'Latex'); 
 title('$B = 30$ GHz', 'Interpreter', 'Latex');
+set(gca, 'LineWidth', 1);
 
