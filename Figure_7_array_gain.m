@@ -31,6 +31,7 @@ legend("TTD-BF, Proposed method","TTD-BF, Proposed robust method",...
     "Conventional BF, MCCM", "Conventional BF, MCM", "Conventional BF, CF", 'Interpreter', 'Latex');
 xlabel('Frequency (GHz)', 'Interpreter', 'Latex');
 title('$B = 10$ GHz', 'Interpreter', 'Latex');
+set(gca, 'LineWidth', 1);
 
 %% Bandwidth B = 20 GHz
 B = 2e10; % bandwidth
@@ -47,6 +48,7 @@ plot(para.fm_all/1e9, 10*log10(P_conv_MCM/para.N), '--', 'LineWidth', 1.5);
 plot(para.fm_all/1e9, 10*log10(P_conv_CF/para.N), ':', 'LineWidth', 1.5);
 xlabel('Frequency (GHz)', 'Interpreter', 'Latex');
 title('$B = 20$ GHz', 'Interpreter', 'Latex');
+set(gca, 'LineWidth', 1);
 
 %% Bandwidth B = 30 GHz
 B = 3e10; % bandwidth
