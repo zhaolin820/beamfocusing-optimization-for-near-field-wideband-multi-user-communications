@@ -28,7 +28,7 @@ box on; grid on;
 
 subplot(1,2,2);
 semilogy(penalty_convergence, '-b', 'LineWidth', 1.5);
-xlabel('Number of cumulative iterations', 'Interpreter', 'Latex');
+xlabel('Number of outer-loop iterations', 'Interpreter', 'Latex');
 ylabel('Penalty value', 'Interpreter', 'Latex');
 box on; grid on;
 
