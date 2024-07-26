@@ -9,6 +9,7 @@ function [R, P] = algorithm_fully_digital(para, h, P_initial)
 %   R: achievable rates
 %   P: optimal fully digital beamformers
 %Date: 04/04/2024
+%Author: Zhaolin Wang
 
 P = zeros(para.N, para.K, para.M);
 for m = 1:para.M
