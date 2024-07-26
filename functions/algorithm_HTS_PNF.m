@@ -13,6 +13,7 @@ function [R, A, D, t] = algorithm_HTS_PNF(para, H, user_r, user_theta, W_initial
 %   D: optimized digital beamforming matrix
 %   t: optimized time delays of TTDs
 %Date: 22/07/2024
+%Author: Zhaolin Wang
 
 %% Initialization
 switch nargin
