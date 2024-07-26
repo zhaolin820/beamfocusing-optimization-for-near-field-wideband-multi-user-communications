@@ -16,6 +16,7 @@ function [R_convergence, penalty_convergence, A, D] = algorithm_FDA_penalty_new(
 %   A: optimized analog beamforming matrix
 %   D: optimized digital beamforming matrix
 %Date: 22/07/2024
+%Author: Zhaolin Wang
 
 R_convergence = [];
 penalty_convergence = [];
