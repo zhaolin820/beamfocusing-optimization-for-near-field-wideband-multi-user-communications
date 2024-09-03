@@ -25,14 +25,12 @@ plot(R_convergence, '-b', 'LineWidth', 1.5);
 xlabel('Number of outer-loop iterations', 'Interpreter', 'Latex');
 ylabel('Spectral efficiency (bit/s/Hz)', 'Interpreter', 'Latex');
 box on; grid on;
-set(gca, 'LineWidth', 1);
 
 subplot(1,2,2);
 semilogy(penalty_convergence, '-b', 'LineWidth', 1.5);
 xlabel('Number of outer-loop iterations', 'Interpreter', 'Latex');
 ylabel('Penalty value', 'Interpreter', 'Latex');
 box on; grid on;
-set(gca, 'LineWidth', 1);
 
 R_FDA = R_convergence(end);
 

@@ -13,7 +13,6 @@ function [R, A, D, t] = algorithm_HTS_PNF(para, H, user_r, user_theta, W_initial
 %   D: optimized digital beamforming matrix
 %   t: optimized time delays of TTDs
 %Date: 22/07/2024
-%Author: Zhaolin Wang
 
 %% Initialization
 switch nargin
@@ -26,29 +25,33 @@ c = 3e8; % speed of light
 t_search = 0:para.t_max/1e3:para.t_max; % search space of TTDs' time delay
 
 %% Analog beamformer design
-t = zeros(para.N_T, para.N_RF); % time delay of TTDs
-A_PS = zeros(para.N, para.N_RF); % PS based analog beamformer
+t = zeros(para.N_T, para.N_RF);
+A_PS = zeros(para.N_sub, para.N_RF);
 
 % design the analog beamformer for each RF chain
 % the n-th beamformer is designed for the n-th user
 for n = 1:para.N_RF
+    
     theta = user_theta(n); r = user_r(n);
-    N_sub = para.N/para.N_T; % number of antennas connected to each RF chain
+    xi_sub = (n-1-(para.N_RF-1)/2)*para.N_sub;
+    r_sub = sqrt(r^2 + xi_sub^2*para.d^2 - 2*r*xi_sub*para.d*cos(theta)); % distance from the center n-th sub-array to the user
+    theta_sub = acos( (r*cos(theta) - xi_sub*para.d)/r_sub );  % angle from the center n-th sub-array to the user
 
+    N_sub_sub = para.N_sub/para.N_T; % number of antennas connected to TTD
     r_n = zeros(para.N_T, 1);
     t_n = zeros(para.N_T, 1);
-    a_n = zeros(para.N, 1);
+    a_n = zeros(para.N_sub, 1);
     for l = 1:para.N_T
-        xi_l = (l-1-(para.N_T-1)/2)*N_sub;
-        r_l = sqrt(r^2 + xi_l^2*para.d^2 - 2*r*xi_l*para.d*cos(theta)); % Equation (50)
-        theta_l = acos( (r*cos(theta) - xi_l*para.d)/r_l ); % Equation (49)
+        xi_l = (l-1-(para.N_T-1)/2)*N_sub_sub;
+        r_l = sqrt(r_sub^2 + xi_l^2*para.d^2 - 2*r_sub*xi_l*para.d*cos(theta_sub)); % Equation (50)
+        theta_l = acos( (r_sub*cos(theta_sub) - xi_l*para.d)/r_l ); % Equation (49)
         r_n(l) = r_l;
-        t_n(l) = - (r_l - r)/c; % delay difference between the center of the subarray and the center of the entire array
+        t_n(l) = - (r_l - r)/c; % delay difference between the center of the sub-subarray and the center of the subarray
 
         % PS coefficients
-        q = (0:(N_sub-1))';
-        delta_q = (q-(N_sub-1)/2) * para.d;
-        a_n((l-1)*N_sub+1 : l*N_sub) = exp( 1i * 2 * pi * para.fc/c...
+        q = (0:(N_sub_sub-1))';
+        delta_q = (q-(N_sub_sub-1)/2) * para.d;
+        a_n((l-1)*N_sub_sub+1 : l*N_sub_sub) = exp( 1i * 2 * pi * para.fc/c...
             * (sqrt(r_l^2 + delta_q.^2 - 2*r_l*delta_q*cos(theta_l)) - r_l) ); % Equation (51)
     end
 
@@ -73,7 +76,7 @@ for n = 1:para.N_RF
             [~,I] = max(obj_value); % one-dimensional search
             t_n(l) = t_search(I);
         end
-
+        
         % check convergence of the TTD optimization
         obj_value_max = obj_value(I);
         if abs((obj_value_max-obj_value_max_pre)/obj_value_max) < 1e-4
@@ -112,12 +115,13 @@ end
 R = R/(para.M+para.Lcp);
 end
 
-
-%% calculate the overall analog beamformer
-function [Am] = analog_bamformer(para, A, t, fm)
-    e = ones(para.N/para.N_T,1);
-    Tm = exp(-1i*2*pi*fm*t);
-    Am = A .* kron(Tm, e);
+%% Calculate the overall analog beamformer at frequency f
+function [A] = analog_bamformer(para, A_PS, t, f)
+    e = ones(para.N_sub/para.N_T,1);
+    T = exp(-1i*2*pi*f*t);
+    A = A_PS .* kron(T, e);
+    A = mat2cell(A, size(A,1), ones(1,size(A,2))); 
+    A = blkdiag(A{:});
 end
 
 %% RWMMSE method for optimizing the digital beamformer
@@ -149,6 +153,3 @@ for i = 1:20
 end
 
 end
-
-
-

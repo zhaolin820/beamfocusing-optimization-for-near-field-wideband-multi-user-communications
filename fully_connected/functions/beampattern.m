@@ -12,7 +12,6 @@ function [P_PNF,P_robust,P_conv_CF, P_con_MCCM, P_conv_MCM] = beampattern(para, 
 %   P_con_MCCM: beampattern achieved by the MCCM method
 %   P_conv_MCM: beampattern achieved by the MCM method
 %Date: 22/07/2024
-%Author: Zhaolin Wang
 
 c = 3e8; % speed of light
 N_sub = para.N/para.N_T; % the number of antennas connected to each TTD

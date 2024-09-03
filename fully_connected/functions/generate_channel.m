@@ -19,15 +19,6 @@ L = 4;
 r_NLoS = rand(para.K, L) * 10 + 5; % 5 ~ 15 m
 theta_NLoS = rand(para.K, L) * pi; % 0 ~ 180 degree
 
-% lambda_b = 0.3;
-% R_b = 0.3;
-% H_b = 1.7;
-% h_u = 1;
-% h_a = 3;
-% beta = 2*lambda_b*R_b*(H_b - h_u)/(h_a - h_u);
-% 
-% P_block = 1 - exp(-beta*user_r);
-
 
 H = zeros(para.N, para.K, para.M);
 for k = 1:para.K
@@ -45,11 +36,6 @@ for k = 1:para.K
             H(:,k,m) = H(:,k,m) + sqrt(path_loss) * reflection_factor(l) * array_response_vector(r_NLoS(k,l), theta_NLoS(k,l), para.N, para.d, fm);
         end
     end
-    % if block == 0
-    %     [~, I] = max(reflection_factor);
-    %     user_r(k) = r_NLoS(k,I);
-    %     user_theta(k) = theta_NLoS(k,I);
-    % end
 end
 H = conj(H);
 

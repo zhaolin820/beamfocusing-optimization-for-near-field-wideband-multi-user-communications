@@ -9,7 +9,6 @@ function [R, P] = algorithm_fully_digital(para, h, P_initial)
 %   R: achievable rates
 %   P: optimal fully digital beamformers
 %Date: 04/04/2024
-%Author: Zhaolin Wang
 
 P = zeros(para.N, para.K, para.M);
 for m = 1:para.M
@@ -21,11 +20,6 @@ end
 R = R/(para.M+para.Lcp);
 
 end
-
-%% The closed-form WMMSE algorithm.
-% This algorithm is based on the following two papers:
-% [1] S. S. Christensen, et al., "Weighted sum-rate maximization using weighted MMSE for MIMO-BC beamforming design," in IEEE Transactions on Wireless Communications, vol. 7, no. 12, pp. 4792-4799, December 2008.
-% [2] X. Zhao, et al., "Rethinking WMMSE: Can Its Complexity Scale Linearly With the Number of BS Antennas?," in IEEE Transactions on Signal Processing, vol. 71, pp. 433-446, 2023.
 
 function [R, P] = RWMMSE(para, h, P)
 R_pre = 0;

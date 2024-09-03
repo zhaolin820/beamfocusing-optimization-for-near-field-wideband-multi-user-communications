@@ -16,7 +16,6 @@ function [R_convergence, penalty_convergence, A, D] = algorithm_FDA_penalty_new(
 %   A: optimized analog beamforming matrix
 %   D: optimized digital beamforming matrix
 %Date: 22/07/2024
-%Author: Zhaolin Wang
 
 R_convergence = [];
 penalty_convergence = [];
@@ -29,7 +28,7 @@ W_initial = W_initial / norm(W_initial, 'fro') * sqrt(para.Pt);
 
 % Optimization
 penalty_factor = 1e5; % initial value of the penalty factor
-iter_max = 60; % maximum iteration number
+iter_max = 40; % maximum iteration number
 for outer_step = 1:iter_max
     obj_pre = 0;
     for inner_step = 1:iter_max
@@ -78,6 +77,7 @@ for outer_step = 1:iter_max
     R_convergence = [R_convergence, R_sum/(para.M+para.Lcp)];
     penalty_convergence = [penalty_convergence, penalty_value];
 end
+
 end
 
 %% Update auxiliary fully-digital beamformer
