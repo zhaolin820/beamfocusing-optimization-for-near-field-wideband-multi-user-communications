@@ -1,6 +1,16 @@
 function [a] = array_response_vector(r, theta, N, d, f)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+%The near-field array response vector for ULAs
+%  [a] = array_response_vector(r, theta, N, d, f)
+%Inputs:
+%   r: distance
+%   theta: angle of direction
+%   N: number of antennas
+%   d: antenna spacing
+%   f: carrier frequency
+%Outputs:
+%   a: array response vector
+%Date: 04/04/2024
+%Author: Zhaolin Wang
 
 c = 3e8;
 
