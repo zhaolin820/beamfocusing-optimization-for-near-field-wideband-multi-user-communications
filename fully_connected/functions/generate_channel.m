@@ -1,21 +1,20 @@
 function [H] = generate_channel(para, user_r, user_theta)
 %Generate the BS-user, RIS-user and BS-RIS channels 
-%  [h, Hc, Hr, dc, dr, LOS, NLOS] = generate_channel(para, angle, path_loss, ar, ac)
+%  [H] = generate_channel(para, angle, path_loss, ar, ac)
 %Inputs:
 %   para: structure of the initial parameters
-%   angle: struture of the angles
+%   angle: structure of the angles
 %   path_loss: structure of the path loss
 %   ar: steering vector of the radar antennas
 %   ac: steering vector of the communication antennas
 %Outputs:
-%   h: RIS-user channels
-%   H: BS-RIS channel
+%   H: channel matrix for all users
 %Date: 01/04/2022
 %Author: Zhaolin Wang
 
 HITRANparams = importdata('data_freq_abscoe.txt');
 
-L = 4;
+L = 4; % the number of the NLoS paths
 r_NLoS = rand(para.K, L) * 10 + 5; % 5 ~ 15 m
 theta_NLoS = rand(para.K, L) * pi; % 0 ~ 180 degree
 
